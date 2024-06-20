@@ -40,6 +40,6 @@ final class GridPlane: SCNNode {
             fatalError("SCNPlane always has one material")
         }
         
-        material.diffuse.contents = UIImage(named: "GridImage.png")
+        material.diffuse.contents = UIImage(named: FileNames.Skin.grid)
     }
 }
