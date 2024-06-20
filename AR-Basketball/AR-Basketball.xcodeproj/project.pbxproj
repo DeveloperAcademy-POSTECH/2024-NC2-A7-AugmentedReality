@@ -16,6 +16,7 @@
 		265E69362C23F15200306C50 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 265E69352C23F15200306C50 /* HomeViewController.swift */; };
 		265E69382C23F2BF00306C50 /* GridPlane.swift in Sources */ = {isa = PBXBuildFile; fileRef = 265E69372C23F2BF00306C50 /* GridPlane.swift */; };
 		265E693A2C23FC1600306C50 /* FileNames.swift in Sources */ = {isa = PBXBuildFile; fileRef = 265E69392C23FC1600306C50 /* FileNames.swift */; };
+		265E693C2C24224F00306C50 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 265E693B2C24224E00306C50 /* SettingViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +30,7 @@
 		265E69352C23F15200306C50 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		265E69372C23F2BF00306C50 /* GridPlane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridPlane.swift; sourceTree = "<group>"; };
 		265E69392C23FC1600306C50 /* FileNames.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileNames.swift; sourceTree = "<group>"; };
+		265E693B2C24224E00306C50 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +66,7 @@
 				265E69202C23D16000306C50 /* AppDelegate.swift */,
 				265E69352C23F15200306C50 /* HomeViewController.swift */,
 				265E69242C23D16000306C50 /* ARViewController.swift */,
+				265E693B2C24224E00306C50 /* SettingViewController.swift */,
 				265E69372C23F2BF00306C50 /* GridPlane.swift */,
 				265E69392C23FC1600306C50 /* FileNames.swift */,
 				265E69222C23D16000306C50 /* Assets.scnassets */,
@@ -151,6 +154,7 @@
 				265E69252C23D16000306C50 /* ARViewController.swift in Sources */,
 				265E69212C23D16000306C50 /* AppDelegate.swift in Sources */,
 				265E69362C23F15200306C50 /* HomeViewController.swift in Sources */,
+				265E693C2C24224F00306C50 /* SettingViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
