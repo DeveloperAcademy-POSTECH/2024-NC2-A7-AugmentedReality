@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		265E69212C23D16000306C50 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 265E69202C23D16000306C50 /* AppDelegate.swift */; };
-		265E69232C23D16000306C50 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 265E69222C23D16000306C50 /* art.scnassets */; };
+		265E69232C23D16000306C50 /* Assets.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 265E69222C23D16000306C50 /* Assets.scnassets */; };
 		265E69252C23D16000306C50 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 265E69242C23D16000306C50 /* ViewController.swift */; };
 		265E69282C23D16000306C50 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 265E69262C23D16000306C50 /* Main.storyboard */; };
 		265E692A2C23D16100306C50 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 265E69292C23D16100306C50 /* Assets.xcassets */; };
@@ -18,7 +18,7 @@
 /* Begin PBXFileReference section */
 		265E691D2C23D16000306C50 /* AR-Basketball.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AR-Basketball.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		265E69202C23D16000306C50 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		265E69222C23D16000306C50 /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
+		265E69222C23D16000306C50 /* Assets.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = Assets.scnassets; sourceTree = "<group>"; };
 		265E69242C23D16000306C50 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		265E69272C23D16000306C50 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		265E69292C23D16100306C50 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -56,7 +56,7 @@
 			isa = PBXGroup;
 			children = (
 				265E69202C23D16000306C50 /* AppDelegate.swift */,
-				265E69222C23D16000306C50 /* art.scnassets */,
+				265E69222C23D16000306C50 /* Assets.scnassets */,
 				265E69242C23D16000306C50 /* ViewController.swift */,
 				265E69262C23D16000306C50 /* Main.storyboard */,
 				265E69292C23D16100306C50 /* Assets.xcassets */,
@@ -123,7 +123,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				265E69232C23D16000306C50 /* art.scnassets in Resources */,
+				265E69232C23D16000306C50 /* Assets.scnassets in Resources */,
 				265E692D2C23D16100306C50 /* LaunchScreen.storyboard in Resources */,
 				265E692A2C23D16100306C50 /* Assets.xcassets in Resources */,
 				265E69282C23D16000306C50 /* Main.storyboard in Resources */,
@@ -307,9 +307,13 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Horang.AR-Basketball";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -337,9 +341,13 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Horang.AR-Basketball";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
