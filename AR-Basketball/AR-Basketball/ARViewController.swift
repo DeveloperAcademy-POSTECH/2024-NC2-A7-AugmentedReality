@@ -13,7 +13,9 @@ class ARViewController: UIViewController {
     
     @IBOutlet var sceneView: ARSCNView!
     
+    private var gridNode: SCNNode? // 그리드 노드를 추적하는 변수
     private var gridAdded = false // 그리드가 추가되었는지 여부를 추적하는 플래그
+    private var basketballBoardAdded = false // 농구 골대가 추가되었는지 여부를 추적하는 플래그
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,26 +33,94 @@ class ARViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupConfiguration() // AR 세션 구성 설정
+        registerInitialGestureRecognizer() // 제스처 인식기 등록
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
-        // 세션 일시 중지
-        sceneView.session.pause()
+        sceneView.session.pause() // 세션 일시 중지
     }
     
     // AR 세션 구성 설정
-    func setupConfiguration() {
-        // 세션 구성 생성
+    private func setupConfiguration() {
         let configuration = ARWorldTrackingConfiguration()
-        configuration.planeDetection = [.horizontal] // 평면 감지
+        configuration.planeDetection = [.horizontal] // 평면 감지 설정
         
         // 화면이 일정 시간 후 어두워지지 않도록 방지
         UIApplication.shared.isIdleTimerDisabled = true
         
         // 세션 실행
         sceneView.session.run(configuration)
+    }
+    
+    // 초기 제스처 인식기 등록
+    private func registerInitialGestureRecognizer() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleFirstTap(_:)))
+        sceneView.addGestureRecognizer(tap)
+    }
+
+    // 첫 번째 탭 처리
+    @objc func handleFirstTap(_ sender: UIGestureRecognizer) {
+        removeGrid() // 그리드 제거
+        
+        guard !basketballBoardAdded else { return } // 이미 엔터티가 생성된 경우 메서드 종료
+        
+        basketballBoardAdded = true // 엔터티 생성 플래그 설정
+        
+        // 기존 제스처 인식기 제거
+        if let tapGesture = sender as? UITapGestureRecognizer {
+            sceneView.removeGestureRecognizer(tapGesture)
+        }
+        
+        let tapLocation = sender.location(in: sceneView)
+        
+        // ARKit의 raycastQuery는 2D 공간에서 터치하는 지점을 3D 좌표로 변환
+        guard let query = sceneView.raycastQuery(from: tapLocation, allowing: .estimatedPlane, alignment: .horizontal) else { return }
+        let results = sceneView.session.raycast(query)
+        
+        guard let hitResult = results.first else { return }
+        
+        // 각 씬을 로드하고 노드를 추가
+        loadAndAddNode(FileNames.Scenes.basketballBoard, hitResult: hitResult)
+        loadAndAddNode(FileNames.Scenes.basketballRing, hitResult: hitResult)
+        loadAndAddNode(FileNames.Scenes.basketballFloor, hitResult: hitResult, applyMaterial: true, materialName: FileNames.Skin.floor)
+    }
+    
+    // 씬을 로드하고 노드를 추가하는 함수
+    private func loadAndAddNode(_ sceneName: String, hitResult: ARRaycastResult, applyMaterial: Bool = false, materialName: String? = nil) {
+        guard let scene = SCNScene(named: sceneName) else {
+            print("\(sceneName) 로드 문제")
+            return
+        }
+        addNodeInScene(scene, hitResult: hitResult, applyMaterial: applyMaterial, materialName: materialName)
+    }
+    
+    // 노드를 씬에 추가하는 함수
+    private func addNodeInScene(_ scene: SCNScene, hitResult: ARRaycastResult, applyMaterial: Bool = false, materialName: String? = nil) {
+        scene.rootNode.childNodes.forEach { node in
+            node.position = SCNVector3(
+                x: node.position.x + hitResult.worldTransform.columns.3.x,
+                y: node.position.y + hitResult.worldTransform.columns.3.y,
+                z: node.position.z + hitResult.worldTransform.columns.3.z
+            )
+            
+            let physicsShape = SCNPhysicsShape(node: node, options: [SCNPhysicsShape.Option.type: SCNPhysicsShape.ShapeType.concavePolyhedron])
+            let physicsBody = SCNPhysicsBody(type: .static, shape: physicsShape)
+            node.physicsBody = physicsBody
+            
+            // 특정 노드에만 material을 추가하는 조건
+            if applyMaterial, let materialName = materialName {
+                let material = SCNMaterial()
+                material.diffuse.contents = UIImage(named: materialName)
+                node.geometry?.materials = [material]
+            }
+            sceneView.scene.rootNode.addChildNode(node)
+        }
+    }
+    
+    // 그리드 노드를 제거하는 함수
+    private func removeGrid() {
+        gridNode?.removeFromParentNode()
     }
 }
 
@@ -67,6 +137,8 @@ extension ARViewController: ARSCNViewDelegate {
         // ARKit이 관리하는 노드에 시각화를 추가하여 평면 앵커의 변화 추적
         node.addChildNode(plane)
         
+        // 그리드 노드를 추적
+        gridNode = plane
         gridAdded = true // 플래그 설정하여 추가적인 그리드 추가 방지
     }
     

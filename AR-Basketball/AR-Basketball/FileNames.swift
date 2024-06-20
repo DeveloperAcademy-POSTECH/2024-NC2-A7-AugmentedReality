@@ -7,9 +7,10 @@
 
 enum FileNames {
     enum Scenes {
-        static let basketballBoard = "Assets.scnassets/basketballBoard.scn"
-        static let ring = "Assets.scnassets/ring.scn"
+        static let basketballBoard = "Assets.scnassets/BasketballBoard.scn"
+        static let basketballRing = "Assets.scnassets/BasketballRing.scn"
         static let basketballFloor = "Assets.scnassets/BasketballFloor.scn"
+        static let basketball = "Assets.scnassets/Basketball.scn"
     }
     
     enum Skin {
