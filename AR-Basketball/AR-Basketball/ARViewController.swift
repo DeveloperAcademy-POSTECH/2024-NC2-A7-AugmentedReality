@@ -17,6 +17,8 @@ class ARViewController: UIViewController {
     private var gridAdded = false // 그리드가 추가되었는지 여부를 추적하는 플래그
     private var basketballBoardAdded = false // 농구 골대가 추가되었는지 여부를 추적하는 플래그
     
+    private var basketballNode: SCNNode? // 농구공 프로토타입 노드
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -28,6 +30,9 @@ class ARViewController: UIViewController {
         
         // 기본 조명을 자동으로 활성화
         sceneView.autoenablesDefaultLighting = true
+        
+        // 농구고 노드 로드
+        loadBasketballNode()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -55,12 +60,12 @@ class ARViewController: UIViewController {
     
     // 초기 제스처 인식기 등록
     private func registerInitialGestureRecognizer() {
-        let tap = UITapGestureRecognizer(target: self, action: #selector(handleFirstTap(_:)))
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleBasketballBoardPlacement(_:)))
         sceneView.addGestureRecognizer(tap)
     }
 
     // 첫 번째 탭 처리
-    @objc func handleFirstTap(_ sender: UIGestureRecognizer) {
+    @objc func handleBasketballBoardPlacement(_ sender: UIGestureRecognizer) {
         removeGrid() // 그리드 제거
         
         guard !basketballBoardAdded else { return } // 이미 엔터티가 생성된 경우 메서드 종료
@@ -84,6 +89,58 @@ class ARViewController: UIViewController {
         loadAndAddNode(FileNames.Scenes.basketballBoard, hitResult: hitResult)
         loadAndAddNode(FileNames.Scenes.basketballRing, hitResult: hitResult)
         loadAndAddNode(FileNames.Scenes.basketballFloor, hitResult: hitResult, applyMaterial: true, materialName: FileNames.Skin.floor)
+        
+        // 농구공을 던지는 제스처 인식기 등록
+        let shootTap = UITapGestureRecognizer(target: self, action: #selector(handleBallShoot(_:)))
+        sceneView.addGestureRecognizer(shootTap)
+    }
+    
+    // 농구공을 던지는 처리
+    @objc func handleBallShoot(_ gestureRecognizer: UIGestureRecognizer) {
+        guard let sceneView = gestureRecognizer.view as? ARSCNView,
+              let centerPoint = sceneView.pointOfView,
+              let basketballPrototype = basketballNode else {
+                  print("basketball ❌❌")
+                  return
+              }
+        
+        // 농구공 복사
+        let basketball = basketballPrototype.clone()
+        
+        // 카메라 위치 잡기
+        let cameraTransform = centerPoint.transform
+        let cameraLocation = SCNVector3(x: cameraTransform.m41, y: cameraTransform.m42, z: cameraTransform.m43)
+        // 카메라 방향은 반대 -> (-)붙이자
+        let cameraOrientation = SCNVector3(x: -cameraTransform.m31, y: -cameraTransform.m32, z: -cameraTransform.m33)
+        let cameraPosition = SCNVector3(cameraLocation.x + cameraOrientation.x, cameraLocation.y + cameraOrientation.y, cameraLocation.z + cameraOrientation.z)
+        
+        basketball.position = cameraPosition
+        
+        // 농구공에 힘을 가해 던지기
+        let forceVector: Float = 7
+        basketball.physicsBody?.applyForce(SCNVector3(x: cameraOrientation.x * forceVector, y: cameraOrientation.y * forceVector, z: cameraOrientation.z * forceVector), asImpulse: true)
+        
+        sceneView.scene.rootNode.addChildNode(basketball)
+    }
+    
+    // 농구공 프로토타입 로드
+    private func loadBasketballNode() {
+        guard let basketballScene = SCNScene(named: FileNames.Scenes.basketball),
+              let basketball = basketballScene.rootNode.childNode(withName: "basketball", recursively: false) else {
+            print("basketballScene Problem")
+            return
+        }
+        
+        // 농구공에 물리 몸체 및 재질 추가
+        let physicsShape = SCNPhysicsShape(node: basketball)
+        let physicsBody = SCNPhysicsBody(type: .dynamic, shape: physicsShape)
+        basketball.physicsBody = physicsBody
+        
+        let material = SCNMaterial()
+        material.diffuse.contents = UIImage(named: FileNames.Skin.basketball)
+        basketball.geometry?.materials = [material]
+        
+        basketballNode = basketball
     }
     
     // 씬을 로드하고 노드를 추가하는 함수
