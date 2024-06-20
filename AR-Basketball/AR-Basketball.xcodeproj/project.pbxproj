@@ -14,6 +14,7 @@
 		265E692A2C23D16100306C50 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 265E69292C23D16100306C50 /* Assets.xcassets */; };
 		265E692D2C23D16100306C50 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 265E692B2C23D16100306C50 /* LaunchScreen.storyboard */; };
 		265E69362C23F15200306C50 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 265E69352C23F15200306C50 /* HomeViewController.swift */; };
+		265E69382C23F2BF00306C50 /* GridPlane.swift in Sources */ = {isa = PBXBuildFile; fileRef = 265E69372C23F2BF00306C50 /* GridPlane.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +26,7 @@
 		265E69292C23D16100306C50 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		265E692C2C23D16100306C50 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		265E69352C23F15200306C50 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		265E69372C23F2BF00306C50 /* GridPlane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridPlane.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +62,7 @@
 				265E69202C23D16000306C50 /* AppDelegate.swift */,
 				265E69352C23F15200306C50 /* HomeViewController.swift */,
 				265E69242C23D16000306C50 /* ARViewController.swift */,
+				265E69372C23F2BF00306C50 /* GridPlane.swift */,
 				265E69222C23D16000306C50 /* Assets.scnassets */,
 				265E69262C23D16000306C50 /* Main.storyboard */,
 				265E69292C23D16100306C50 /* Assets.xcassets */,
@@ -140,6 +143,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				265E69382C23F2BF00306C50 /* GridPlane.swift in Sources */,
 				265E69252C23D16000306C50 /* ARViewController.swift in Sources */,
 				265E69212C23D16000306C50 /* AppDelegate.swift in Sources */,
 				265E69362C23F15200306C50 /* HomeViewController.swift in Sources */,
